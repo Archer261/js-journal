@@ -10,12 +10,16 @@ const app = express();
 
 
 app.get('/api/notes', (req, res) => {
-    res.readFile('./db/db.json').then((db) =>
-        res.send('notes.html'));
-})
+    req.json("../db/db.json");
+});
+
 
 // app.post('/api/notes', (req, res) => {
-
+//     fs.readFileSync(req.body).then(data => {
+//         return JSON.parse(data)
+//     }).then((j) => {
+//         fs.appendFileSync('./db/db.json', JSON.stringify(j));
+//     })
 // })
 
 module.exports = router;
