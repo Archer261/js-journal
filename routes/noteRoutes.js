@@ -24,10 +24,8 @@ router.post("/notes", (req, res) => {
 // Delete note
 router.delete("/notes/:id", (req, res) => {
     let noteId = parseInt(req.params.id);
-    console.log(chosenId);
-
     for (let i = 0; i < savedNotes.length; i++) {
-        if (chosenId === savedNotes[i].id) {
+        if (noteId === savedNotes[i].id) {
             savedNotes.splice(i, 1);
             let noteJSON = JSON.stringify(savedNotes, null, 2);
             fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(savedNotes))
