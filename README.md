@@ -6,6 +6,8 @@
 
 A web based journal app that runs on NoSQL.
 
+https://user-images.githubusercontent.com/104469447/198169611-f9f8d3b4-2304-4894-b9b0-6b45c2f225a4.mp4
+
 ## **Table of Contents**
 
 1. [Installation](#Installation)
