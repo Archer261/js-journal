@@ -11,26 +11,31 @@ router.get('/notes', (req, res) => {
 
 // Create note
 router.post("/notes", (req, res) => {
+    let newNoteIndex = savedNotes.length + 1
     let note = req.body;
+    note["id"] = newNoteIndex
     savedNotes.push(note);
-    res.json(savedNotes);
+    res.json(note)
     fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(savedNotes))
+    console.log(note)
+
 });
 
 // Delete note
 router.delete("/notes/:id", (req, res) => {
-    let noteId = req.params.id
-    console.log(req.params.id)
-    noteList.find(notes => notes.id === id)
 
 })
 
-// app.post('/api/notes', (req, res) => {
-//     fs.readFileSync(req.body).then(data => {
-//         return JSON.parse(data)
-//     }).then((j) => {
-//         fs.appendFileSync('./db/db.json', JSON.stringify(j));
-//     })
-// })
-
+function delNote(arr, value) {
+    var i = 0;
+    console.log("test delete")
+    while (i < arr.length) {
+        if (arr[i].id === value) {
+            arr.splice(i, 1);
+        } else {
+            ++i;
+        }
+    }
+    return arr;
+}
 module.exports = router;
