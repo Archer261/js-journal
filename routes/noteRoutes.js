@@ -11,7 +11,7 @@ router.get('/notes', (req, res) => {
 
 // Create note
 router.post("/notes", (req, res) => {
-    let newNoteIndex = savedNotes.length + 1
+    let newNoteIndex = generateID(savedNotes)
     let note = req.body;
     note["id"] = newNoteIndex
     savedNotes.push(note);
@@ -23,19 +23,43 @@ router.post("/notes", (req, res) => {
 
 // Delete note
 router.delete("/notes/:id", (req, res) => {
+    let noteId = parseInt(req.params.id);
+    console.log(chosenId);
 
-})
-
-function delNote(arr, value) {
-    var i = 0;
-    console.log("test delete")
-    while (i < arr.length) {
-        if (arr[i].id === value) {
-            arr.splice(i, 1);
-        } else {
-            ++i;
+    for (let i = 0; i < savedNotes.length; i++) {
+        if (chosenId === savedNotes[i].id) {
+            savedNotes.splice(i, 1);
+            let noteJSON = JSON.stringify(savedNotes, null, 2);
+            fs.writeFileSync(path.join(__dirname, "../db/db.json"), JSON.stringify(savedNotes))
         }
     }
-    return arr;
+    res.json(savedNotes);
+})
+
+// Function to generate a random id for new notes. Also validate that the ID does not match an existing ID
+function generateID(arr) {
+    let no = Math.floor(Math.random() * 90 + 10);
+    arr.forEach((ele) => {
+        if (Math.floor(Math.random() * 90 + 10) === ele.id) {
+            no = Math.floor(Math.random() * 90 + 10);
+        } else {
+            return;
+        }
+    }); return no
 }
+
+// function delNote(arr, value) {
+//     var i = 0;
+//     console.log("test delete")
+//     while (i < arr.length) {
+//         if (arr[i].id === value) {
+//             arr.splice(i, 1);
+//         } else {
+//             ++i;
+//         }
+//     }
+//     return arr;
+// }
+
+
 module.exports = router;
